@@ -1,0 +1,31 @@
+services:
+  mariadb:
+    image: public.ecr.aws/bitnami/mariadb:11.4
+    container_name: micro-mariadb
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_DATABASE=bitnami_moodle
+      - MARIADB_USER=bn_moodle
+    ports:
+      - "3308:3306"
+    volumes:
+      - mariadb_data_micro:/bitnami/mariadb
+
+  moodle:
+    image:  public.ecr.aws/bitnami/moodle:4.4
+    container_name: micro-moodle
+    ports:
+      - "8081:8080"  
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MOODLE_DATABASE_HOST=mariadb
+      - MOODLE_DATABASE_NAME=bitnami_moodle
+      - MOODLE_DATABASE_USER=bn_moodle
+    depends_on:
+      - mariadb
+    volumes:
+      - moodle_data_micro:/bitnami/moodle
+
+volumes:
+  mariadb_data_micro:
+  moodle_data_micro:
