@@ -6,16 +6,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const queue = [];
-const MAX_WORKERS = 10; // proses 10 request sekaligus
+const MAX_WORKERS = 10; 
 let activeWorkers = 0;
-
 async function processQueue() {
-  // Jalankan worker selama masih ada item dan belum mencapai batas
+ 
   while (queue.length > 0 && activeWorkers < MAX_WORKERS) {
     const { body, cookies, resolve } = queue.shift();
     activeWorkers++;
 
-    // Jalankan secara async tanpa menunggu (fire and manage)
     (async () => {
       try {
         const response = await fetch(
@@ -38,7 +36,7 @@ async function processQueue() {
         resolve({ status: 500, error: err.message });
       } finally {
         activeWorkers--;
-        processQueue(); // cek apakah ada item baru setelah worker selesai
+        processQueue();
       }
     })();
   }
