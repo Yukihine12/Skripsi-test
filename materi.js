@@ -61,7 +61,7 @@ export default function () {
     { redirects: 5 }
   );
 
-  // PENTING: ambil cookies setelah login
+  // ambil cookies setelah login
   let cookieString = formatCookies(loginRes.cookies);
 
   let isLogin = loginRes.url.includes('/my/') || loginRes.body.includes('Dashboard');
@@ -74,7 +74,7 @@ export default function () {
 
   // 3. AKSES HALAMAN KURSUS
   let courseRes = http.get(`${BASE_URL}/course/view.php?id=3`, {
-    headers: { Cookie: cookieString }, // ← wajib ada
+    headers: { Cookie: cookieString }, // Cookienya
   });
 
   check(courseRes, {
@@ -86,7 +86,7 @@ export default function () {
 
   // 4. BUKA FILE MATERI (PDF)
   let materiRes = http.get(`${BASE_URL}/mod/resource/view.php?id=4`, {
-    headers: { Cookie: cookieString }, // ← wajib ada
+    headers: { Cookie: cookieString }, // Cookienya
   });
 
   check(materiRes, {
