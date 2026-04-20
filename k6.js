@@ -36,7 +36,7 @@ export let options = {
 
 const BASE_URL = 'http://localhost:8081';
 const CMID     = 2;
-const SLOTS    = 10; // sesuaikan jumlah soal quiz Anda
+const SLOTS    = 10;
 
 function formatCookies(cookies) {
   let result = [];
@@ -46,7 +46,7 @@ function formatCookies(cookies) {
   return result.join('; ');
 }
 
-// Jawaban simulasi — sesuaikan dengan opsi jawaban quiz Anda
+// Jawaban simulasi
 // 0=A, 1=B, 2=C, 3=D (tergantung konfigurasi Moodle)
 const ANSWERS = ['1', '3', '2', '1', '3', '1', '2', '3', '0', '3'];
 
@@ -115,7 +115,7 @@ export default function () {
   sleep(1);
 
   // 6. PROCESS ATTEMPT (submit jawaban)
-  // Bangun payload dinamis dengan attemptId yang benar
+  // ini payload dinamis
   let payload = {
     attempt:        attemptId,
     cmid:           CMID,
@@ -127,7 +127,7 @@ export default function () {
     thispage:       0,
   };
 
-  // Tambahkan jawaban dan metadata per soal
+  // Menambahkan MetaData untuk playload
   for (let i = 1; i <= SLOTS; i++) {
     payload[`q${attemptId}:${i}_:flagged`]       = 0;
     payload[`q${attemptId}:${i}_:sequencecheck`] = 1;
